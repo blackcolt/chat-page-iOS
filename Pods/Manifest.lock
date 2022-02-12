@@ -1,0 +1,42 @@
+PODS:
+  - ChatViewController (1.2.0):
+    - PlaceholderUITextView
+  - InputBarAccessoryView (5.3.1):
+    - InputBarAccessoryView/Core (= 5.3.1)
+  - InputBarAccessoryView/Core (5.3.1)
+  - Kingfisher (7.1.2)
+  - MessageKit (3.6.0):
+    - InputBarAccessoryView (~> 5.3.1)
+  - PlaceholderUITextView (1.2.0)
+  - Socket.IO-Client-Swift (16.0.1):
+    - Starscream (~> 4.0)
+  - Starscream (4.0.4)
+
+DEPENDENCIES:
+  - ChatViewController
+  - Kingfisher
+  - MessageKit
+  - Socket.IO-Client-Swift
+
+SPEC REPOS:
+  trunk:
+    - ChatViewController
+    - InputBarAccessoryView
+    - Kingfisher
+    - MessageKit
+    - PlaceholderUITextView
+    - Socket.IO-Client-Swift
+    - Starscream
+
+SPEC CHECKSUMS:
+  ChatViewController: fcc9152b22a0099ced7052d842829d6a7ee9e53f
+  InputBarAccessoryView: 1f75d8c9f75e5e57f3ffac36ed58635a8005e0bc
+  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
+  MessageKit: a8efaf55b021672b19ffdd5a85ce1c2f3b53058e
+  PlaceholderUITextView: a2158e51dc0a3217ecca2d879bbe59372292d391
+  Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+
+PODFILE CHECKSUM: e0e2cac01b388d3d15d81d034b2336e20b5cfd70
+
+COCOAPODS: 1.11.2
