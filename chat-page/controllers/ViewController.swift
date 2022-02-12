@@ -10,31 +10,48 @@ import SocketIO
 import MessageKit
 import ChatViewController
 import InputBarAccessoryView
+import ObjectMapper
 
 class ViewController: MessagesViewController {
     let manager = SocketManager(socketURL: Config.socketUrl, config: [.log(true), .compress])
     var socket: SocketIOClient? = nil
     var messages: [Message] = []
+    var UserName: String = ""
+    var socketId: String = ""
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        initSocket()
         initCollectionView()
+        displayLoginAlert()
     }
-    func addMessage(message: Message){
-        socket?.emit("chat message", message.messageText!, completion: nil)
+    func displayLoginAlert(){
+        let alert = UIAlertController(title: "בחר שם משתמש", message: "שם משתמש", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "שם משתמש"
+        }
+        alert.addAction(UIAlertAction(title: "בחר", style: .default, handler: { [weak alert] (_) in
+            APIManager.register(userName: alert?.textFields![0].text ?? "", socketId: self.socketId) { userRegistterResponse in
+                self.initSocket(userName: userRegistterResponse.user?.displayName ?? "")
+            } onFailure: { error in
+                print(error)
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
-extension ViewController {
-    func initSocket(){
+extension ViewController { //Socket
+    func initSocket(userName: String){
         socket = manager.defaultSocket
         socket?.on(clientEvent: .connect) {data, ack in
             print("socket connected")
+            if let payload = data[1] as? [String:  Any] {
+                self.socketId = payload["sid"] as! String
+            }
         }
         socket?.on("recive chat message") {data, ack in
             if let payload = data as? [[String:String]] {
                 let sender = User()
-                let message = Message(messageText: payload[0]["message"] ?? "", sender: sender)
+                let message = Message(messageText: payload[0]["message"] ?? "", sender: sender!,  socketId: payload[0]["socketId"] ?? "")
                 self.messages.append(message)
                 self.messagesCollectionView.reloadData()
             }
@@ -42,21 +59,7 @@ extension ViewController {
         socket?.on(clientEvent: .error) {data, ack in
             print("socke error", data)
         }
-        socket?.connect()
-    }
-    func initCollectionView() {
-        messagesCollectionView.backgroundColor = .white
-        messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-        messagesCollectionView.messageCellDelegate = self
-        messageInputBar.delegate = self
-        messageInputBar.inputTextView.tintColor = .black
-        messageInputBar.sendButton.setTitleColor(UIColor.brown, for: .normal)
-        messageInputBar.sendButton.setTitleColor(
-            UIColor.black.withAlphaComponent(0.3),
-            for: .highlighted
-        )
+        socket?.connect(withPayload: ["userName": userName])
     }
 }
 
@@ -88,11 +91,25 @@ extension ViewController: MessagesDisplayDelegate {
     public func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return  [DetectorType.address, DetectorType.url, DetectorType.date, DetectorType.phoneNumber]
     }
+    func initCollectionView() {
+        messagesCollectionView.backgroundColor = .white
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.messageCellDelegate = self
+        messageInputBar.delegate = self
+        messageInputBar.inputTextView.tintColor = .black
+        messageInputBar.sendButton.setTitleColor(UIColor.brown, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.black.withAlphaComponent(0.3),
+            for: .highlighted
+        )
+    }
 }
 
 extension ViewController: MessagesDataSource {
     public func currentSender() -> SenderType {
-        return User()
+        return User()!
     }
     
     public func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -156,8 +173,8 @@ extension ViewController: InputBarAccessoryViewDelegate {
     private func insertMessages(_ data: [Any], inputBar: InputBarAccessoryView) {
         for component in data {
             if let str = component as? String {
-                let message = Message(messageText: str, sender: User())
-                socket?.emit("chat message", message.messageText!) {
+                let message = Message(messageText: str, sender: User()!, socketId: socketId)
+                socket?.emit("chat message",message.messageText!) {
                     self.messageInputBar.inputTextView.text = ""
                     self.messageInputBar.inputTextView.placeholder = "Aa"
                     self.messageInputBar.sendButton.stopAnimating()

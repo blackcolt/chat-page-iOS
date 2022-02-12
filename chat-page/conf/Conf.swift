@@ -9,8 +9,10 @@ import Foundation
 
 class Config {
     #if DEBUG
-        static let socketUrl = URL(string: "http://localhost")!
+        static let baseUrl = URL(string: "http://localhost")!
     #else
-        static let socketUrl = URL(string: "http://api.example.com")!
+        static let baseUrl =  URL(string: "http://idan-magled.duckdns.org/")!
     #endif
+    static let apiUrl = baseUrl.appendingPathComponent("/api/")
+    static let socketUrl = baseUrl
 }

@@ -7,13 +7,18 @@
 
 import Foundation
 import MessageKit
+import ObjectMapper
 
-class User: SenderType {
-    var senderId: String
-    var displayName: String
-    
-    init(){
-        self.senderId = "1"
-        self.displayName = "idan"
+class User: Mappable, SenderType {
+    var senderId: String = ""
+    var displayName: String = ""
+    var socketId: String = ""
+
+    required init?() {}
+    required init?(map: Map) {}
+    func mapping(map: Map) {
+        senderId <- map["_id"]
+        socketId <- map["socketId"]
+        displayName <- map["userName"]
     }
 }

@@ -5,9 +5,13 @@ target 'chat-page' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Socket.IO-Client-Swift'
+  pod 'AlamofireObjectMapper'
   pod 'ChatViewController'
+  pod 'AlamofireMapper'
+  pod 'SwiftyJSON'
   pod 'Kingfisher'
   pod 'MessageKit'
+  pod 'Alamofire'
   # Pods for chat-page
 
   target 'chat-pageTests' do

@@ -17,10 +17,12 @@ class Message: MessageType {
     var sentDate: Date = Date()
     var sentDateString: String?
     var kind: MessageKind = .text("")
-    init(messageText: String, sender: SenderType){
+    var socketId: String = ""
+    init(messageText: String, sender: SenderType, socketId: String){
         self.messageText = messageText
         self.sender = sender
         self.kind = .text(messageText)
+        self.socketId = socketId
     }
 //    var sender: SenderType = User.shared!
 //    override func mapping(map: Map) {

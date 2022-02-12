@@ -13,6 +13,9 @@
 		EE0C275E27B72501002E2FDE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C275D27B72501002E2FDE /* Message.swift */; };
 		EE0C276227B72C88002E2FDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C276127B72C88002E2FDE /* User.swift */; };
 		EE0C276827B7AF20002E2FDE /* Conf.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C276727B7AF20002E2FDE /* Conf.swift */; };
+		EE0C276A27B7BD67002E2FDE /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C276927B7BD67002E2FDE /* APIManager.swift */; };
+		EE0C276D27B7BF3F002E2FDE /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C276C27B7BF3F002E2FDE /* RegisterResponse.swift */; };
+		EE0C276F27B7BF87002E2FDE /* BasicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C276E27B7BF87002E2FDE /* BasicResponse.swift */; };
 		EEFE6B0027B710870005D536 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE6AFF27B710870005D536 /* AppDelegate.swift */; };
 		EEFE6B0227B710870005D536 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE6B0127B710870005D536 /* SceneDelegate.swift */; };
 		EEFE6B0427B710870005D536 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE6B0327B710870005D536 /* ViewController.swift */; };
@@ -52,6 +55,9 @@
 		EE0C275D27B72501002E2FDE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		EE0C276127B72C88002E2FDE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EE0C276727B7AF20002E2FDE /* Conf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conf.swift; sourceTree = "<group>"; };
+		EE0C276927B7BD67002E2FDE /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		EE0C276C27B7BF3F002E2FDE /* RegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
+		EE0C276E27B7BF87002E2FDE /* BasicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicResponse.swift; sourceTree = "<group>"; };
 		EEFE6AFC27B710860005D536 /* chat-page.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chat-page.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEFE6AFF27B710870005D536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEFE6B0127B710870005D536 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,8 +157,18 @@
 			isa = PBXGroup;
 			children = (
 				EE0C276727B7AF20002E2FDE /* Conf.swift */,
+				EE0C276927B7BD67002E2FDE /* APIManager.swift */,
 			);
 			path = conf;
+			sourceTree = "<group>";
+		};
+		EE0C276B27B7BF2C002E2FDE /* network */ = {
+			isa = PBXGroup;
+			children = (
+				EE0C276C27B7BF3F002E2FDE /* RegisterResponse.swift */,
+				EE0C276E27B7BF87002E2FDE /* BasicResponse.swift */,
+			);
+			path = network;
 			sourceTree = "<group>";
 		};
 		EEFE6AF327B710860005D536 = {
@@ -180,6 +196,7 @@
 		EEFE6AFE27B710860005D536 /* chat-page */ = {
 			isa = PBXGroup;
 			children = (
+				EE0C276B27B7BF2C002E2FDE /* network */,
 				EE0C276627B7AE8D002E2FDE /* conf */,
 				EE0C276527B7AE58002E2FDE /* storyboards */,
 				EE0C276427B7AD76002E2FDE /* controllers */,
@@ -447,12 +464,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE0C276F27B7BF87002E2FDE /* BasicResponse.swift in Sources */,
 				EEFE6B0427B710870005D536 /* ViewController.swift in Sources */,
 				EE0C276227B72C88002E2FDE /* User.swift in Sources */,
 				EE0C275E27B72501002E2FDE /* Message.swift in Sources */,
 				EE0C276827B7AF20002E2FDE /* Conf.swift in Sources */,
 				EEFE6B0027B710870005D536 /* AppDelegate.swift in Sources */,
+				EE0C276D27B7BF3F002E2FDE /* RegisterResponse.swift in Sources */,
 				EEFE6B0227B710870005D536 /* SceneDelegate.swift in Sources */,
+				EE0C276A27B7BD67002E2FDE /* APIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
