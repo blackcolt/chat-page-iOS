@@ -515,7 +515,8 @@
 				EEFE6B0627B710870005D536 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
+			path = "chat-page/storyboards";
+			sourceTree = SOURCE_ROOT;
 		};
 		EEFE6B0A27B710890005D536 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -655,6 +656,7 @@
 				DEVELOPMENT_TEAM = WK3MG9PTZP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "chat-page/Info.plist";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Just for fun";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -684,6 +686,7 @@
 				DEVELOPMENT_TEAM = WK3MG9PTZP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "chat-page/Info.plist";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Just for fun";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
