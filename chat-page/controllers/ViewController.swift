@@ -16,12 +16,13 @@ class ViewController: MessagesViewController {
     let manager = SocketManager(socketURL: Config.socketUrl, config: [.log(true), .compress])
     var socket: SocketIOClient? = nil
     var messages: [Message] = []
-    var UserName: String = ""
+    var userName: String = ""
     var socketId: String = ""
+    var currentUser = User()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         initCollectionView()
-        displayLoginAlert()
+        initSocket()
     }
     func displayLoginAlert(){
         let alert = UIAlertController(title: "בחר שם משתמש", message: "שם משתמש", preferredStyle: .alert)
@@ -30,7 +31,8 @@ class ViewController: MessagesViewController {
         }
         alert.addAction(UIAlertAction(title: "בחר", style: .default, handler: { [weak alert] (_) in
             APIManager.register(userName: alert?.textFields![0].text ?? "", socketId: self.socketId) { userRegistterResponse in
-                self.initSocket(userName: userRegistterResponse.user?.displayName ?? "")
+                self.userName = userRegistterResponse.user?.displayName ?? ""
+                self.currentUser = userRegistterResponse.user
             } onFailure: { error in
                 print(error)
             }
@@ -40,18 +42,25 @@ class ViewController: MessagesViewController {
 }
 
 extension ViewController { //Socket
-    func initSocket(userName: String){
+    func initSocket(){
         socket = manager.defaultSocket
         socket?.on(clientEvent: .connect) {data, ack in
             print("socket connected")
             if let payload = data[1] as? [String:  Any] {
+                self.displayLoginAlert()
                 self.socketId = payload["sid"] as! String
             }
         }
         socket?.on("recive chat message") {data, ack in
             if let payload = data as? [[String:String]] {
+<<<<<<< HEAD
                 let sender = User()
                 let message = Message(messageText: payload[0]["message"] ?? "", sender: sender!,  socketId: payload[1]["socketId"] ?? "")
+=======
+                let response = payload[0] as Dictionary<String, AnyObject>
+                let sender = User(JSON: response, context: nil)
+                let message = Message(messageText: payload[0]["message"] ?? "", sender: sender!)
+>>>>>>> 64fc86c3d185b76423c0ed8cb9be10d0d19d8e29
                 self.messages.append(message)
                 self.messagesCollectionView.reloadData()
             }
@@ -59,7 +68,7 @@ extension ViewController { //Socket
         socket?.on(clientEvent: .error) {data, ack in
             print("socke error", data)
         }
-        socket?.connect(withPayload: ["userName": userName])
+        socket?.connect()
     }
 }
 
@@ -81,15 +90,20 @@ extension ViewController: MessagesDisplayDelegate {
         return UIColor.black
     }
     public func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return .white
+        return .green
     }
     public func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+<<<<<<< HEAD
 //        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
 //        return .bubbleTail(tail, .curved)
 //        if message.socketId == socketId {
 //
 //        }
         return .bubbleTail(.bottomLeft, .curved)
+=======
+        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(tail, .curved)
+>>>>>>> 64fc86c3d185b76423c0ed8cb9be10d0d19d8e29
     }
     public func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return  [DetectorType.address, DetectorType.url, DetectorType.date, DetectorType.phoneNumber]
@@ -112,7 +126,7 @@ extension ViewController: MessagesDisplayDelegate {
 
 extension ViewController: MessagesDataSource {
     public func currentSender() -> SenderType {
-        return User()!
+        return currentUser!
     }
     
     public func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -176,7 +190,7 @@ extension ViewController: InputBarAccessoryViewDelegate {
     private func insertMessages(_ data: [Any], inputBar: InputBarAccessoryView) {
         for component in data {
             if let str = component as? String {
-                let message = Message(messageText: str, sender: User()!, socketId: socketId)
+                let message = Message(messageText: str, sender: User()!)
                 socket?.emit("chat message",message.messageText!) {
                     self.messageInputBar.inputTextView.text = ""
                     self.messageInputBar.inputTextView.placeholder = "Aa"
