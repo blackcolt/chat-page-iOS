@@ -51,7 +51,7 @@ extension ViewController { //Socket
         socket?.on("recive chat message") {data, ack in
             if let payload = data as? [[String:String]] {
                 let sender = User()
-                let message = Message(messageText: payload[0]["message"] ?? "", sender: sender!,  socketId: payload[0]["socketId"] ?? "")
+                let message = Message(messageText: payload[0]["message"] ?? "", sender: sender!,  socketId: payload[1]["socketId"] ?? "")
                 self.messages.append(message)
                 self.messagesCollectionView.reloadData()
             }
@@ -86,6 +86,9 @@ extension ViewController: MessagesDisplayDelegate {
     public func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
 //        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
 //        return .bubbleTail(tail, .curved)
+//        if message.socketId == socketId {
+//
+//        }
         return .bubbleTail(.bottomLeft, .curved)
     }
     public func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
